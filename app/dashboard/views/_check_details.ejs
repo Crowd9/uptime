@@ -36,6 +36,21 @@
           <textarea name="check[tags]" rows="2"/><%= check.tags.join(', ') %></textarea>
         </div>
       </div>
+      <div class="control-group">
+        <label class="control-label">Type</label>
+
+        <div class="controls">
+          <select name="check[type]">
+            <% typeSelections = ['', 'http', 'https', 'udp', 'ping'] %>
+
+            <% for(var i = 0; i < typeSelections.length; i++) { %>
+            <option<%= typeSelections[i] === check.type ? " selected='selected'" : '' %>>
+              <%= typeSelections[i] %>
+            </option>
+            <% } %>
+          </select>
+        </div>
+      </div>
       <% if (check.lastTested) { %>
       <div class="control-group">
         <label class="control-label">Last edited on</label>
@@ -87,12 +102,6 @@ $(document).ready(function() {
     });
     updatePollingIntervalTooltip();
     $(intervalFieldSelector).bind('keypress keyup', updatePollingIntervalTooltip);
-    $('#check_form input[name*="url"]').blur(function() {
-      var field = $(this);
-      if (field.val().indexOf('://') == -1) {
-        field.val('http://' + field.val());
-      } 
-    });
     var tagField = $('#check_form textarea');
     var tags = tagField.val().split(', ');
     tagField.tagsInput();

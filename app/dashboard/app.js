@@ -71,7 +71,9 @@ app.post('/checks', function(req, res) {
   check.name = check.name || check.url;
   check.tags = Check.convertTags(req.body.check.tags);
   check.interval = req.body.check.interval * 1000;
-  check.type = Check.guessType(check.url);
+  if(!check.type) {
+    check.type = Check.guessType(check.url);
+  }
   check.save(function(err) {
     req.flash('info', 'New check has been created');
     res.redirect(req.body.saveandadd ? '/checks/new' : ('/checks/' + check._id + '#admintab'));
@@ -90,7 +92,9 @@ app.put('/checks/:id', function(req, res, next) {
   var check = req.body.check;
   check.tags = Check.convertTags(check.tags);
   check.interval = req.body.check.interval * 1000;
-  check.type = Check.guessType(check.url);
+  if(!check.type) {
+    check.type = Check.guessType(check.url);
+  }
   Check.update({ _id: req.params.id }, { $set: check }, { upsert: true }, function(err) {
     if (err) return next(err);
     req.flash('info', 'Changes have been saved');

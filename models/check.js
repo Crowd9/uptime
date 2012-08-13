@@ -278,6 +278,8 @@ Check.statics.guessType = function(url) {
   if (url.search(/^udp:\/\//) != -1) {
     return 'udp';
   }
+
+  return 'ping'
 }
 
 /**
