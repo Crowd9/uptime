@@ -2,6 +2,8 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Store</th>
+      <th>Url</th>
       <th>Status</th>
       <th title="Percentage of all pings up in the last 24h">Availability</th>
       <th title="Percentage of all pings below slow threshold in the last 24h">Responsiveness</th>
@@ -19,6 +21,12 @@
   <td data-sort="{{= check.name }}">
     <a href="{{=  route + '/checks/' + check._id }}">{{= check.name }}</a>
     <a href="{{= check.url }}" target="_blank"><img src="{{= route }}/images/external-link-ltr-icon.png"></a>
+  </td>
+  <td data-sort="{{= check.storeName }}">
+    {{= check.storeName }}
+  </td>
+  <td data-sort="{{= check.url }}">
+    {{= check.url }}
   </td>
   {{ if (check.lastTested) { }}
     {{ if (check.isPaused) { }}
