@@ -65,6 +65,24 @@ module.exports = function(app) {
       res.json(stat);
     });
   });
+
+  function loadChecks(req, res, next) {
+    Check.find({ storeId: req.params.storeId }).find(function(err, checks) {
+      if (err) return next(err);
+      if (!checks) return next(new Error('failed to load checks for Store ' + req.params.storeId));
+      req.checks = checks;
+      next();
+    });
+  }
+
+  app.get('/store-check/:storeId', loadChecks, function(req, res, next) {
+    CheckEvent.find({ check: { $in: req.checks } }).find(function(err, events) {
+      res.json({
+        events: events,
+        checks: req.checks
+      })
+    });
+  });
   
   app.get('/checks/:id/stats/:type/:page?', loadCheck, function(req, res, next) {
     req.check.getStatsForPeriod(req.params.type, req.params.page, function(err, stats) {

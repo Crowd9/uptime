@@ -255,7 +255,11 @@ Check.methods.getSingleStatsForPeriod = function(period, date, callback) {
       end: end.valueOf()
     })
   });
-}
+};
+
+Check.methods.getStoreStats = function(callback) {
+    this.db.model()
+};
 
 Check.statics.convertTags = function(tags) {
   if (typeof(tags) === 'string') {

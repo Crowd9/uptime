@@ -57,7 +57,7 @@ app.configure('production', function() {
 app.use('/api',       require('./app/api/app'));
 app.use('/dashboard', require('./app/dashboard/app'));
 app.get('/', function(req, res) {
-  res.redirect('/dashboard/events');
+  res.redirect('/dashboard/checks');
 });
 app.get('/favicon.ico', function(req, res) {
   res.redirect('/dashboard/favicon.ico', 301);
